@@ -50,15 +50,53 @@ public class Main {
     //<< 31.05.2021
     //List of product transactions for the period 01.05.2021 - 31.05.2021:
     //Light bulb - LED 75W | Entry date: 05.05.2021 | Unit: Item | Stock delivered: 200
-    public static void choiseOperation() {
+    public class Methods {
+        public static void menu(String[][] inventory, int itemCounter) throws Exception {
 
+            Scanner sc = new Scanner(System.in);
+            System.out.println("Please select with NUMBER the operation you want to be performed:\n");
+            System.out.println("    1): List all items");
+            System.out.println("    2): Add new delivery");
+            System.out.println("    3): List deliveries for time period ");
+            System.out.println("0 - > EXIT;\n");
+            System.out.print("Pending your choice: ");
+
+            int choice = sc.nextByte();
+
+            switch (choice) {
+                case 1 -> showList(inventory, itemCounter);
+
+                case 0 -> {
+                    return;
+                }
+            }
+        }
     }
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Please select with NUMBER the operation you want to be performed:\n");
-        System.out.println("    1): List all items");
-        System.out.println("    2): Add new delivery");
-        System.out.println("    3): List deliveries for time period \n");
-        System.out.print("Pending your choice: ");
+    public static void showList(String[][]inventory,int itemCounter) throws Exception {
+        for (int i = 0; i < inventory.length; i++) {
+            for (int j = 0; j < inventory[i].length; j++) {
+                if (inventory[0][0].equals("n/a")){
+                    System.out.println("List is empty");
+                }else if (!inventory[i][j].equals("n/a")) {
+
+                    switch (j) {
+                        case 0 -> System.out.print(inventory[i][0] + " | ");
+                        case 1 -> System.out.print("Expiry date: " + inventory[i][1] + " | ");
+                        case 2 -> System.out.print("Entry date: " + inventory[i][2] + " | ");
+                        case 3 -> System.out.print("Manufacturer: " + inventory[i][3] + " | ");
+                        case 4 -> System.out.print("Unit: " + inventory[i][4] + " | ");
+                        case 5 -> System.out.print("Stock: " + inventory[i][5] + " | ");
+                        case 6 -> System.out.print("Position: " + inventory[i][6] + " | ");
+                        case 7 -> System.out.print("Available items at shelf: " + inventory[i][7]);
+                    }
+                } else if (inventory[i][j].equals("n/a")) {
+                    System.out.println();
+                    Methods.menu(inventory, itemCounter);
+                }
+            }
+            System.out.println();
+        }
+        Methods.menu(inventory,itemCounter);
     }
+}
