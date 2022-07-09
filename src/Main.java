@@ -65,7 +65,7 @@ public class Main {
 
             switch (choice) {
                 case 1 -> showList(inventory, itemCounter);
-
+                case 2 -> addItem(inventory, itemCounter);
                 case 0 -> {
                     return;
                 }
@@ -73,12 +73,12 @@ public class Main {
         }
     }
 
-    public static void showList(String[][]inventory,int itemCounter) throws Exception {
+    public static void showList(String[][] inventory, int itemCounter) throws Exception {
         for (int i = 0; i < inventory.length; i++) {
             for (int j = 0; j < inventory[i].length; j++) {
-                if (inventory[0][0].equals("n/a")){
+                if (inventory[0][0].equals("n/a")) {
                     System.out.println("List is empty");
-                }else if (!inventory[i][j].equals("n/a")) {
+                } else if (!inventory[i][j].equals("n/a")) {
 
                     switch (j) {
                         case 0 -> System.out.print(inventory[i][0] + " | ");
@@ -97,6 +97,57 @@ public class Main {
             }
             System.out.println();
         }
-        Methods.menu(inventory,itemCounter);
+        Methods.menu(inventory, itemCounter);
+    }
+
+    public static void addItem(String[][] inventory, int itemCounter) throws Exception {
+        if (inventory[itemCounter][0].equals("n/a")) {
+            for (int j = 0; j < inventory[itemCounter].length; j++) {
+                Scanner sc = new Scanner(System.in);
+                switch (j) {
+
+                    case 0 -> {
+                        System.out.println();
+                        System.out.print("Enter product name-> ");
+                        inventory[itemCounter][0] = sc.nextLine();
+
+                    }
+                    case 1 -> {
+                        System.out.print("Enter expiry date-> ");
+                        inventory[itemCounter][1] = sc.nextLine();
+
+                    }
+                    case 2 -> {
+                        System.out.print("Enter entry date-> ");
+                        inventory[itemCounter][2] = sc.nextLine();
+                    }
+                    case 3 -> {
+                        System.out.print("Enter manufacturer-> ");
+                        inventory[itemCounter][3] = sc.nextLine();
+                    }
+                    case 4 -> {
+                        System.out.print("Enter unit-> ");
+                        inventory[itemCounter][4] = sc.nextLine();
+                    }
+                    case 5 -> {
+                        System.out.print("Enter in stock-> ");
+                        inventory[itemCounter][5] = sc.nextLine();
+                    }
+                    case 6 -> {
+                        System.out.print("Enter position-> ");
+                        inventory[itemCounter][6] = sc.nextLine();
+                    }
+                    case 7 -> {
+                        System.out.print("Enter available items at shelf-> ");
+                        inventory[itemCounter][7] = sc.nextLine();
+                    }
+                }
+            }
+        }
+        System.out.println("Product was added successfully!");
+        System.out.println(inventory[itemCounter][0]);
+        System.out.println();
+        itemCounter++;
+        Methods.menu(inventory, itemCounter);
     }
 }
