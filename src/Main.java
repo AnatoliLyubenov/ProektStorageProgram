@@ -1,3 +1,5 @@
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 public class Main {
@@ -66,6 +68,7 @@ public class Main {
             switch (choice) {
                 case 1 -> showList(inventory, itemCounter);
                 case 2 -> addItem(inventory, itemCounter);
+                case 3 -> searchPeriod(inventory,itemCounter);
                 case 0 -> {
                     return;
                 }
@@ -118,7 +121,7 @@ public class Main {
 
                     }
                     case 2 -> {
-                        System.out.print("Enter entry date-> ");
+                         System.out.print("Enter entry date-> ");
                         inventory[itemCounter][2] = sc.nextLine();
                     }
                     case 3 -> {
@@ -150,4 +153,46 @@ public class Main {
         itemCounter++;
         Methods.menu(inventory, itemCounter);
     }
-}
+
+    public static void searchPeriod(String[][]inventory,int itemCounter)throws Exception{
+        Scanner sc=new Scanner(System.in);
+        System.out.print("From date-> ");
+        String startDate = sc.nextLine();
+        Date startD=new SimpleDateFormat("dd.MM.yyyy").parse(startDate);
+        System.out.print("To date-> ");
+        String endDate = sc.nextLine();
+        Date endD=new SimpleDateFormat("dd.MM.yyyy").parse(endDate);
+
+        System.out.println();
+        System.out.println("List of product transactions for the period " + startDate + " - " + endDate + ":");
+        System.out.println();
+        for (int i = 0; i < inventory.length; i++) {
+            for (int j = 0; j < inventory[i].length; j++) {
+
+                //checks if list is empty
+                if (inventory[0][0].equals("n/a")){
+                    System.out.println("List is empty");
+
+                }else if (!inventory[i][2].equals("n/a")) {
+                    Date itemDate=new SimpleDateFormat("dd.MM.yyyy").parse(inventory[i][2]);
+                    //checks there is an item in between start and end date
+                    if (startD.before(itemDate)&&endD.after(itemDate)||startD.equals(itemDate)||endD.equals(itemDate))
+                        switch (j) {
+                            case 0 -> System.out.print(inventory[i][0] + " | ");
+                            case 1 -> System.out.print("Expiry date: " + inventory[i][1] + " | ");
+                            case 2 -> System.out.print("Entry date: " + inventory[i][2] + " | ");
+                            case 3 -> System.out.print("Manufacturer: " + inventory[i][3] + " | ");
+                            case 4 -> System.out.print("Unit: " + inventory[i][4] + " | ");
+                            case 5 -> System.out.print("Stock: " + inventory[i][5] + " | ");
+                            case 6 -> System.out.print("Position: " + inventory[i][6] + " | ");
+                            case 7 -> System.out.print("Available items at shelf: " + inventory[i][7]);
+                        }
+                }else if (inventory[i][j].equals("n/a")) {
+                    System.out.println();
+                    Methods.menu(inventory, itemCounter);
+                }
+            }
+            System.out.println();
+        }
+        Methods.menu(inventory,itemCounter);
+    }
